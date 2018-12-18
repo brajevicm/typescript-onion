@@ -1,15 +1,8 @@
 import 'reflect-metadata';
-import { InversifyExpressServer } from 'inversify-express-utils';
-import { Container } from 'inversify';
+import {InversifyExpressServer} from 'inversify-express-utils';
 import * as bodyParser from 'body-parser';
-import TYPES from './Assembler/types';
-import {IUserService, AdminUserService} from '../Core/Service/user';
-import './Controller/home';
-import './Controller/user';
 
-// load everything needed to the Container
-let container = new Container();
-container.bind<IUserService>(TYPES.abc).to(AdminUserService);
+import {container} from './Assembler/Container';
 
 // start the server
 let server = new InversifyExpressServer(container);

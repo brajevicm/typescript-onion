@@ -1,22 +1,13 @@
-import { injectable } from 'inversify';
+import {provide} from "inversify-binding-decorators";
 
-export interface IUser {
-    email: string;
-    name: string;
-}
+import {UserService} from "../Interface/UserService";
+import {User} from "../Interface/User";
+import Types from "../../Web/Assembler/Types";
 
-export interface IUserService {
-    getUsers(): IUser[];
-    getUser(id: string): IUser;
-    newUser(user: IUser): IUser;
-    updateUser(id: string, user: IUser): IUser;
-    deleteUser(id: string): string;
-}
+@provide(Types.UserService)
+export class UserServiceImpl implements UserService {
 
-@injectable()
-export class AdminUserService implements IUserService {
-
-    private userStorage: IUser[] = [{
+    private userStorage: User[] = [{
         email: 'lorem@ipsum.com',
         name: 'Lorem'
     }, {
@@ -25,12 +16,12 @@ export class AdminUserService implements IUserService {
     }];
 
 
-    public getUsers(): IUser[] {
+    public getUsers(): User[] {
         return this.userStorage;
     }
 
-    public getUser(id: string): IUser {
-        let result: IUser;
+    public getUser(id: string): User {
+        let result: User;
         this.userStorage.map(user => {
             if (user.name === id) {
                 result = user;
@@ -40,12 +31,12 @@ export class AdminUserService implements IUserService {
         return result;
     }
 
-    public newUser(user: IUser): IUser {
+    public newUser(user: User): User {
         this.userStorage.push(user);
         return user;
     }
 
-    public updateUser(id: string, user: IUser): IUser {
+    public updateUser(id: string, user: User): User {
         this.userStorage.map((entry, index) => {
             if (entry.name === id) {
                 this.userStorage[index] = user;
@@ -56,7 +47,7 @@ export class AdminUserService implements IUserService {
     }
 
     public deleteUser(id: string): string {
-        let updatedUser: IUser[] = [];
+        let updatedUser: User[] = [];
         this.userStorage.map(user => {
             if (user.name !== id) {
                 updatedUser.push(user);
