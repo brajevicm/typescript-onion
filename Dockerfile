@@ -17,4 +17,4 @@ COPY . /opt/app
 
 EXPOSE 3000
 
-CMD [ "pm2-dev", "start", "src/index.ts" ]
+CMD [ "pm2-dev", "start", "src/Web/index.ts" ]

@@ -2,14 +2,14 @@ import 'reflect-metadata';
 import { InversifyExpressServer } from 'inversify-express-utils';
 import { Container } from 'inversify';
 import * as bodyParser from 'body-parser';
-import TYPES from './constant/types';
-import { UserService } from './service/user';
-import './controller/home';
-import './controller/user';
+import TYPES from './Assembler/types';
+import {IUserService, AdminUserService} from '../Core/Service/user';
+import './Controller/home';
+import './Controller/user';
 
 // load everything needed to the Container
 let container = new Container();
-container.bind<UserService>(TYPES.UserService).to(UserService);
+container.bind<IUserService>(TYPES.abc).to(AdminUserService);
 
 // start the server
 let server = new InversifyExpressServer(container);
@@ -22,6 +22,6 @@ server.setConfig((app) => {
 });
 
 let serverInstance = server.build();
-serverInstance.listen(8080);
+serverInstance.listen(3000);
 
-console.log('Server started on port 80 :)');
+console.log('Server started on port 3000 :)');

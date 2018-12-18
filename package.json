@@ -6,8 +6,8 @@
   "author": "Miloš Brajević <milos.brajevic@hotmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node src/index.ts",
-    "watch": "ts-node-dev --respawn --transpileOnly src/index.ts"
+    "start": "ts-node src/Web/index.ts",
+    "watch": "ts-node-dev --respawn --transpileOnly src/Web/index.ts"
   },
   "dependencies": {
     "@types/express": "^4.16.0",

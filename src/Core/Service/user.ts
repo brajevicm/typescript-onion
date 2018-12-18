@@ -5,8 +5,16 @@ export interface IUser {
     name: string;
 }
 
+export interface IUserService {
+    getUsers(): IUser[];
+    getUser(id: string): IUser;
+    newUser(user: IUser): IUser;
+    updateUser(id: string, user: IUser): IUser;
+    deleteUser(id: string): string;
+}
+
 @injectable()
-export class UserService {
+export class AdminUserService implements IUserService {
 
     private userStorage: IUser[] = [{
         email: 'lorem@ipsum.com',

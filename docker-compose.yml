@@ -4,7 +4,7 @@ services:
   backend:
     image: onion
     ports:
-      - 80:8080
+      - 3000:3000
     volumes:
     - .:/opt/app:delegated
     - ./package.json:/opt/package.json
