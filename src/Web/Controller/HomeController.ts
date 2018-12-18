@@ -1,9 +1,20 @@
-import {controller, httpGet} from 'inversify-express-utils';
+import {controller, httpGet, queryParam} from 'inversify-express-utils';
+
+import {UserNotFoundException} from "../Exception/UserNotFoundException";
 
 @controller('/')
 export class HomeController {
     @httpGet('/')
-    public get(): string {
-        return 'Home sweet home';
+    public get(@queryParam("id") userId: number): string {
+        try {
+            if (userId) {
+                throw new UserNotFoundException(userId);
+            }
+
+            return 'Pass id as query parameter.'
+
+        } catch (e) {
+            return e.message;
+        }
     }
 }

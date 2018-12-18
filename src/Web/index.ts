@@ -1,10 +1,8 @@
 import 'reflect-metadata';
 import {InversifyExpressServer} from 'inversify-express-utils';
 import * as bodyParser from 'body-parser';
+import {container} from "./Assembler/Container";
 
-import {container} from './Assembler/Container';
-
-// start the server
 let server = new InversifyExpressServer(container);
 
 server.setConfig((app) => {
