@@ -1,18 +1,5 @@
 import 'reflect-metadata';
-import {InversifyExpressServer} from 'inversify-express-utils';
-import * as bodyParser from 'body-parser';
-import {container} from "./Assembler/Container";
+import {Server} from "./Server";
 
-let server = new InversifyExpressServer(container);
-
-server.setConfig((app) => {
-    app.use(bodyParser.urlencoded({
-        extended: true
-    }));
-    app.use(bodyParser.json());
-});
-
-let serverInstance = server.build();
-serverInstance.listen(3000);
-
-console.log('Server started on port 3000 :)');
+const server = new Server();
+server.start();

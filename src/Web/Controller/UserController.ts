@@ -1,4 +1,5 @@
 import {
+    BaseHttpController,
     controller, httpGet
 } from 'inversify-express-utils';
 import {inject} from 'inversify';
@@ -9,9 +10,10 @@ import {User} from "../../Core/Domain/User/Interface/User";
 import Types from '../Assembler/Types';
 
 @controller('/user')
-export class UserController {
+export class UserController extends BaseHttpController {
 
     constructor(@inject(Types.UserService) private userService: UserService) {
+        super();
     }
 
     @httpGet('/custom')
@@ -26,7 +28,8 @@ export class UserController {
 
     @httpGet('/:id')
     public async getUser(request: Request): Promise<User> {
-        return await this.userService.getUser(request.params.id);
+        const user = await this.userService.getUser(request.params.id);
+        return user;
     }
 
     // @httpPost('/')

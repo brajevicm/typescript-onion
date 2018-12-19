@@ -11,5 +11,5 @@ export interface Repository<T> {
 
     findManyById(ids: string[]): Promise<T[]>;
 
-    findManyByQuery(query?: Query<T>): Promise<T[]>;
+    // findManyByQuery(query?: Query<T>): Promise<T[]>;
 }

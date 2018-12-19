@@ -11,11 +11,15 @@ services:
       - ./yarn.lock:/opt/yarn.lock
       - notused:/opt/app/node_modules
       - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - backend_network
+    depends_on:
+      - mysql
 
   mysql:
     image: mysql:5.6.42
     ports:
-      - 3307:3306
+      - 3100:3306
     volumes:
       - mysql_data:/var/lib/mysql
     environment:
@@ -24,7 +28,12 @@ services:
       MYSQL_PASSWORD: pw
       MYSQL_ROOT_PASSWORD: root
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    networks:
+      - backend_network
 
 volumes:
   notused:
   mysql_data:
+
+networks:
+  backend_network:
