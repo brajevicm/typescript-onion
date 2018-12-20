@@ -4,6 +4,8 @@
 
 import '../Infrastructure/Mailer/NodeMailer';
 import '../Infrastructure/Data/MySqlConfigProvider';
+import '../Infrastructure/Data/TypeOrmDatabaseClient';
+import '../Core/Util/ConsoleLogger';
 
 /**
  * Controllers

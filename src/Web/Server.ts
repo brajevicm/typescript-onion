@@ -29,6 +29,7 @@ export class Server {
     app.listen(Number(process.env.SERVER_PORT), () => {
       if (JSON.parse(process.env.LOGGER_ENABLED)) {
         const routeInfo = getRouteInfo(container);
+
         console.log(JSON.stringify({ routes: routeInfo }, null, 2));
         console.log(`Server started on port ${process.env.SERVER_PORT}`);
       }

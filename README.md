@@ -1,26 +1,23 @@
 # typescript-onion
 
-####TODO
-DBClient refactor class + interface
+## TODO
 
-Email class + interface
+Redis
 
-GraphQL class + interface
+GraphQL
 
-Logging class + interface
+Scheduler
 
-Scheduler class + interface
+Event
 
-Event class + interface
+Authentication
 
-Authentication class + interface
+Authorization
 
-Authorization class + interface
+Payment
 
-Payment class + interface
+DB Migration
 
-DB migration class + interface
+DB Seeding
 
-DB seeding class + interface
-
-#####TESTING
+## TESTING

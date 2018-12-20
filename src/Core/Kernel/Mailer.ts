@@ -1,3 +1,3 @@
 export interface Mailer {
-  send(): Promise<void>;
+  send(to: string, subject: string, text: string): Promise<void>;
 }

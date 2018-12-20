@@ -6,22 +6,19 @@ import RepositoryTypes from '../../../Config/Types/RepositoryTypes';
 import { User } from '../../../Core/Interface/User';
 import { UserRepository } from '../../../Core/Interface/UserRepository';
 import { UserEntity } from '../../../Core/Entity/UserEntity';
-import { DatabaseClient } from '../DatabaseClient';
-import { ConfigProvider } from '../../../Core/Kernel/ConfigProvider';
 import { KernelTypes } from '../../../Config/Types/KernelTypes';
+import { DatabaseClient } from '../../../Core/Kernel/DatabaseClient';
 
 @provide(RepositoryTypes.UserRepository)
 export class UserRepositoryImpl implements UserRepository {
   private static repository: Repository<UserEntity>;
 
   constructor(
-    @inject(KernelTypes.ConfigProvider) configProvider: ConfigProvider
+    @inject(KernelTypes.DatabaseClient) databaseClient: DatabaseClient
   ) {
     if (!UserRepositoryImpl.repository) {
-      DatabaseClient.connect(
-        configProvider,
-        UserEntity
-      )
+      databaseClient
+        .connect(UserEntity)
         .then(async connection => {
           UserRepositoryImpl.repository = connection.getRepository(UserEntity);
         })
