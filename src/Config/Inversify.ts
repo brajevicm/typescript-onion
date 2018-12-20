@@ -1,14 +1,15 @@
 import { Container } from 'inversify';
-import * as express from 'express';
 import { buildProviderModule } from 'inversify-binding-decorators';
+import { makeLoggerMiddleware } from 'inversify-logger-middleware';
 import * as morgan from 'morgan';
 import * as helmet from 'helmet';
 import * as cors from 'cors';
-import * as expressSanitized from 'express-sanitize-escape';
 import * as bodyParser from 'body-parser';
+import * as express from 'express';
+import * as expressSanitized from 'express-sanitize-escape';
 
-import './Loader';
 import { MiddlewareTypes } from './Types/MiddlewareTypes';
+import './Loader';
 
 const container = new Container();
 
@@ -45,5 +46,9 @@ container
  */
 
 container.load(buildProviderModule());
+
+if (JSON.parse(process.env.LOGGER_ENABLED)) {
+  container.applyMiddleware(makeLoggerMiddleware());
+}
 
 export { container };

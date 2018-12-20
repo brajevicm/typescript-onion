@@ -2,13 +2,11 @@ import 'reflect-metadata';
 import { Container } from 'inversify';
 import { getRouteInfo, InversifyExpressServer } from 'inversify-express-utils';
 import * as express from 'express';
-import * as dotenv from 'dotenv';
 
 import { MiddlewareTypes } from '../Config/Types/MiddlewareTypes';
 
 export class Server {
   public start(container: Container): void {
-    dotenv.config();
     const server: InversifyExpressServer = new InversifyExpressServer(
       container
     );
