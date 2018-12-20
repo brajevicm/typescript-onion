@@ -1,10 +1,10 @@
 // import {provide} from "inversify-binding-decorators";
 // import {getConnection, Repository as TypeORMRepository} from "typeorm";
 //
-// import Types from "../../../Web/Server/Types";
+// import RepositoryTypes from "../../../Web/Config/RepositoryTypes";
 // import {Query, Repository} from "../../../Core/Kernel/Repository";
 //
-// @provide(Types.Repository)
+// @provide(RepositoryTypes.Repository)
 // export class RepositoryImpl<TEntity, TDto> implements Repository<TEntity> {
 //     private repository: TypeORMRepository<TEntity>;
 //

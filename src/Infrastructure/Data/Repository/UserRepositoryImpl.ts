@@ -2,13 +2,13 @@ import { provide } from 'inversify-binding-decorators';
 import { Repository } from 'typeorm';
 
 import { User } from '../../../Core/Interface/User';
-import Types from '../../../Web/Server/Types';
+import RepositoryTypes from '../../../Config/Types/RepositoryTypes';
 import { UserRepository } from '../../../Core/Interface/UserRepository';
 import { UserEntity } from '../../../Core/Entity/UserEntity';
 import { DatabaseClient } from '../DatabaseClient';
 import { TypeOrmConfigProvider } from '../TypeOrmConfigProvider';
 
-@provide(Types.UserRepository)
+@provide(RepositoryTypes.UserRepository)
 export class UserRepositoryImpl implements UserRepository {
   // private repository: Repository<UserEntity> = getConnection().getRepository(UserEntity)
   private static repository: Repository<UserEntity>;

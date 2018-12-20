@@ -1,13 +1,13 @@
 {
   "name": "typescript-onion",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/bootstrap.ts",
   "repository": "git@github.com:brajevicm/typescript-onion.git",
   "author": "Miloš Brajević <milos.brajevic@hotmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node src/Web/index.ts",
-    "watch": "ts-node-dev --respawn --transpileOnly src/Web/index.ts"
+    "start": "ts-node src/bootstrap.ts",
+    "watch": "ts-node-dev --respawn --transpileOnly src/bootstrap.ts"
   },
   "husky": {
     "hooks": {

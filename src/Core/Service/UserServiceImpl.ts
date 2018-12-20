@@ -2,14 +2,16 @@ import { provide } from 'inversify-binding-decorators';
 
 import { UserService } from '../Interface/UserService';
 import { User } from '../Interface/User';
-import Types from '../../Web/Server/Types';
+import RepositoryTypes from '../../Config/Types/RepositoryTypes';
 import { inject } from 'inversify';
 import { UserRepository } from '../Interface/UserRepository';
+import ServiceTypes from '../../Config/Types/ServiceTypes';
 
-@provide(Types.UserService)
+@provide(ServiceTypes.UserService)
 export class UserServiceImpl implements UserService {
   constructor(
-    @inject(Types.UserRepository) private userRepository: UserRepository
+    @inject(RepositoryTypes.UserRepository)
+    private userRepository: UserRepository
   ) {}
 
   public custom(): User[] {

@@ -6,11 +6,6 @@ import {
 } from 'inversify-express-utils';
 import { inject } from 'inversify';
 import { Request } from 'express';
-
-import { UserService } from '../../Core/Interface/UserService';
-import { User } from '../../Core/Interface/User';
-import Types from '../Server/Types';
-import { UserNotFoundException } from '../Exception/UserNotFoundException';
 import {
   BadRequestErrorMessageResult,
   CreatedNegotiatedContentResult,
@@ -18,10 +13,15 @@ import {
   OkNegotiatedContentResult
 } from 'inversify-express-utils/dts/results';
 
+import { UserService } from '../../Core/Interface/UserService';
+import { User } from '../../Core/Interface/User';
+import { UserNotFoundException } from '../Exception/UserNotFoundException';
+import ServiceTypes from '../../Config/Types/ServiceTypes';
+
 @controller('/users')
 export class UserController extends BaseHttpController {
   constructor(
-    @inject(Types.UserService) private readonly userService: UserService
+    @inject(ServiceTypes.UserService) private readonly userService: UserService
   ) {
     super();
   }

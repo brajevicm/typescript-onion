@@ -2,10 +2,10 @@ import { provide } from 'inversify-binding-decorators';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 import { User } from '../Interface/User';
-import Types from '../../Web/Server/Types';
+import EntityTypes from '../../Config/Types/EntityTypes';
 
 @Entity('user')
-@provide(Types.User)
+@provide(EntityTypes.User)
 export class UserEntity implements User {
   @PrimaryGeneratedColumn()
   id: number;
