@@ -1,5 +1,3 @@
-import 'reflect-metadata';
-import {Server} from "./Server";
+import { Server } from './Server/Server';
 
-const server = new Server();
-server.start();
+new Server().start();

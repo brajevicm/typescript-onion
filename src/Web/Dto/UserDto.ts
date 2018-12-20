@@ -1,7 +1,6 @@
-import {User} from "../../Core/Domain/User/Interface/User";
+import { User } from '../../Core/Interface/User';
 
 export class UserDto implements User {
-    id: number;
-    email: string;
-    name: string;
+  email: string;
+  name: string;
 }

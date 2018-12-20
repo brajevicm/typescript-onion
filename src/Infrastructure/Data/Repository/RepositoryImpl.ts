@@ -1,7 +1,7 @@
 // import {provide} from "inversify-binding-decorators";
 // import {getConnection, Repository as TypeORMRepository} from "typeorm";
 //
-// import Types from "../../../Web/Assembler/Types";
+// import Types from "../../../Web/Server/Types";
 // import {Query, Repository} from "../../../Core/Kernel/Repository";
 //
 // @provide(Types.Repository)

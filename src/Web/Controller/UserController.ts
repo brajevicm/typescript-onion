@@ -1,49 +1,83 @@
 import {
-    BaseHttpController,
-    controller, httpGet
+  BaseHttpController,
+  controller,
+  httpGet,
+  httpPost
 } from 'inversify-express-utils';
-import {inject} from 'inversify';
-import {Request} from 'express';
+import { inject } from 'inversify';
+import { Request } from 'express';
 
-import {UserService} from "../../Core/Domain/User/Interface/UserService";
-import {User} from "../../Core/Domain/User/Interface/User";
-import Types from '../Assembler/Types';
+import { UserService } from '../../Core/Interface/UserService';
+import { User } from '../../Core/Interface/User';
+import Types from '../Server/Types';
+import { UserNotFoundException } from '../Exception/UserNotFoundException';
+import {
+  BadRequestErrorMessageResult,
+  CreatedNegotiatedContentResult,
+  NotFoundResult,
+  OkNegotiatedContentResult
+} from 'inversify-express-utils/dts/results';
 
-@controller('/user')
+@controller('/users')
 export class UserController extends BaseHttpController {
+  constructor(
+    @inject(Types.UserService) private readonly userService: UserService
+  ) {
+    super();
+  }
 
-    constructor(@inject(Types.UserService) private userService: UserService) {
-        super();
+  @httpGet('/custom')
+  public getCustom(): User[] {
+    return this.userService.custom();
+  }
+
+  @httpGet('/')
+  public async getUsers(): Promise<User[]> {
+    return await this.userService.getUsers();
+  }
+
+  @httpGet('/:id')
+  public async getUser(
+    request: Request
+  ): Promise<NotFoundResult | OkNegotiatedContentResult<User>> {
+    try {
+      const user = await this.userService.getUser(request.params.id);
+      if (!user) {
+        throw new UserNotFoundException(request.params.id);
+      }
+
+      return this.ok(user);
+    } catch (e) {
+      console.log(e.message);
+      return this.notFound();
     }
+  }
 
-    @httpGet('/custom')
-    public getCustom(): User[] {
-        return this.userService.custom();
+  @httpPost('/')
+  public async newUser(
+    request: Request
+  ): Promise<
+    CreatedNegotiatedContentResult<User> | BadRequestErrorMessageResult
+  > {
+    try {
+      const user = await this.userService.save(request.body);
+      if (!user) {
+        throw Error('not created');
+      }
+      return this.created(request.path, user);
+    } catch (e) {
+      return this.badRequest(e.message);
     }
+  }
 
-    @httpGet('/')
-    public async getUsers(): Promise<User[]> {
-        return await this.userService.getUsers();
-    }
-
-    @httpGet('/:id')
-    public async getUser(request: Request): Promise<User> {
-        const user = await this.userService.getUser(request.params.id);
-        return user;
-    }
-
-    // @httpPost('/')
-    // public newUser(request: Request): User {
-    //     return this.userService.newUser(request.body);
-    // }
-    //
-    // @httpPut('/:id')
-    // public updateUser(request: Request): User {
-    //     return this.userService.updateUser(request.params.id, request.body);
-    // }
-    //
-    // @httpDelete('/:id')
-    // public deleteUser(request: Request): string {
-    //     return this.userService.deleteUser(request.params.id);
-    // }
+  //
+  // @httpPut('/:id')
+  // public updateUser(request: Request): User {
+  //     return this.userService.updateUser(request.params.id, request.body);
+  // }
+  //
+  // @httpDelete('/:id')
+  // public deleteUser(request: Request): string {
+  //     return this.userService.deleteUser(request.params.id);
+  // }
 }
