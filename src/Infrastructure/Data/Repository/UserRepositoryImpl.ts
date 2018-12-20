@@ -10,7 +10,6 @@ import { TypeOrmConfigProvider } from '../TypeOrmConfigProvider';
 
 @provide(RepositoryTypes.UserRepository)
 export class UserRepositoryImpl implements UserRepository {
-  // private repository: Repository<UserEntity> = getConnection().getRepository(UserEntity)
   private static repository: Repository<UserEntity>;
 
   constructor() {
@@ -26,7 +25,7 @@ export class UserRepositoryImpl implements UserRepository {
     }
   }
 
-  custom(): User[] {
+  public custom(): User[] {
     return [
       {
         id: 1,
@@ -41,19 +40,19 @@ export class UserRepositoryImpl implements UserRepository {
     ];
   }
 
-  async findAll(): Promise<User[]> {
+  public async findAll(): Promise<User[]> {
     return await UserRepositoryImpl.repository.find();
   }
 
-  async findById(id: string): Promise<User> {
+  public async findById(id: string): Promise<User> {
     return await UserRepositoryImpl.repository.findOne(id);
   }
 
-  async findManyById(ids: string[]): Promise<User[]> {
+  public async findManyById(ids: string[]): Promise<User[]> {
     return undefined;
   }
 
-  async save(user: User): Promise<User> {
+  public async save(user: User): Promise<User> {
     return await UserRepositoryImpl.repository.save(user);
   }
 }

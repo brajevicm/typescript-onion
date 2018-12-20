@@ -21,7 +21,8 @@ import ServiceTypes from '../../Config/Types/ServiceTypes';
 @controller('/users')
 export class UserController extends BaseHttpController {
   constructor(
-    @inject(ServiceTypes.UserService) private readonly userService: UserService
+    @inject(ServiceTypes.UserService)
+    private readonly userService: UserService
   ) {
     super();
   }
@@ -69,15 +70,4 @@ export class UserController extends BaseHttpController {
       return this.badRequest(e.message);
     }
   }
-
-  //
-  // @httpPut('/:id')
-  // public updateUser(request: Request): User {
-  //     return this.userService.updateUser(request.params.id, request.body);
-  // }
-  //
-  // @httpDelete('/:id')
-  // public deleteUser(request: Request): string {
-  //     return this.userService.deleteUser(request.params.id);
-  // }
 }

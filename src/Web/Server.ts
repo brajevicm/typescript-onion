@@ -1,27 +1,33 @@
 import 'reflect-metadata';
 import { Container } from 'inversify';
-import { InversifyExpressServer } from 'inversify-express-utils';
+import { getRouteInfo, InversifyExpressServer } from 'inversify-express-utils';
 import * as express from 'express';
-import * as bodyParser from 'body-parser';
 import { MiddlewareTypes } from '../Config/Types/MiddlewareTypes';
 
 export class Server {
   public start(container: Container): void {
-    const server = new InversifyExpressServer(container);
-    server.setConfig(app => {
+    const server: InversifyExpressServer = new InversifyExpressServer(
+      container
+    );
+
+    server.setConfig((app: express.Application) => {
       app.use(
-        bodyParser.urlencoded({
-          extended: true
-        })
+        container.get<express.RequestHandler>(MiddlewareTypes.UrlEncodedParser)
       );
-      app.use(bodyParser.json());
+      app.use(
+        container.get<express.RequestHandler>(MiddlewareTypes.JsonParser)
+      );
       app.use(container.get<express.RequestHandler>(MiddlewareTypes.Helmet));
-      // app.use(container.get<express.RequestHandler>(MiddlewareTypes.Morgan));
+      app.use(container.get<express.RequestHandler>(MiddlewareTypes.Morgan));
+      app.use(container.get<express.RequestHandler>(MiddlewareTypes.Sanitize));
+      app.use(container.get<express.RequestHandler>(MiddlewareTypes.Cors));
     });
 
     const app = server.build();
+    const routeInfo = getRouteInfo(container);
 
     app.listen(3000, () => {
+      console.log(JSON.stringify({ routes: routeInfo }, null, 2));
       console.log('Server started on port 3000');
     });
   }
