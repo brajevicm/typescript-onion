@@ -7,9 +7,8 @@ import * as cors from 'cors';
 import * as expressSanitized from 'express-sanitize-escape';
 import * as bodyParser from 'body-parser';
 
-import { MiddlewareTypes } from './Config/Types/MiddlewareTypes';
-
-import './Config/Loader';
+import './Loader';
+import { MiddlewareTypes } from './Types/MiddlewareTypes';
 
 const container = new Container();
 
@@ -47,4 +46,4 @@ container
 
 container.load(buildProviderModule());
 
-export default container;
+export { container };

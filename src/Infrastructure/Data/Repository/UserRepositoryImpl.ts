@@ -1,21 +1,25 @@
+import { inject } from 'inversify';
 import { provide } from 'inversify-binding-decorators';
 import { Repository } from 'typeorm';
 
-import { User } from '../../../Core/Interface/User';
 import RepositoryTypes from '../../../Config/Types/RepositoryTypes';
+import { User } from '../../../Core/Interface/User';
 import { UserRepository } from '../../../Core/Interface/UserRepository';
 import { UserEntity } from '../../../Core/Entity/UserEntity';
 import { DatabaseClient } from '../DatabaseClient';
-import { TypeOrmConfigProvider } from '../TypeOrmConfigProvider';
+import { ConfigProvider } from '../../../Core/Kernel/ConfigProvider';
+import { KernelTypes } from '../../../Config/Types/KernelTypes';
 
 @provide(RepositoryTypes.UserRepository)
 export class UserRepositoryImpl implements UserRepository {
   private static repository: Repository<UserEntity>;
 
-  constructor() {
+  constructor(
+    @inject(KernelTypes.ConfigProvider) configProvider: ConfigProvider
+  ) {
     if (!UserRepositoryImpl.repository) {
       DatabaseClient.connect(
-        new TypeOrmConfigProvider(),
+        configProvider,
         UserEntity
       )
         .then(async connection => {

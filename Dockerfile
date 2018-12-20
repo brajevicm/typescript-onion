@@ -6,7 +6,7 @@ ARG NODE_ENV=production
 ENV NODE_ENV $NODE_ENV
 
 WORKDIR /opt
-COPY package.json yarn.lock ./
+COPY package.json yarn.lock .env ./
 RUN yarn install && yarn cache clean
 RUN yarn global add pm2
 RUN pm2 install typescript

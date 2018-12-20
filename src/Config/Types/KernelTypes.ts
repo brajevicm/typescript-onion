@@ -1,5 +1,4 @@
-const KernelTypes = {
-  Mailer: Symbol('Mailer')
+export const KernelTypes = {
+  Mailer: Symbol('Mailer'),
+  ConfigProvider: Symbol('ConfigProvider')
 };
-
-export default KernelTypes;

@@ -2,10 +2,13 @@ import 'reflect-metadata';
 import { Container } from 'inversify';
 import { getRouteInfo, InversifyExpressServer } from 'inversify-express-utils';
 import * as express from 'express';
+import * as dotenv from 'dotenv';
+
 import { MiddlewareTypes } from '../Config/Types/MiddlewareTypes';
 
 export class Server {
   public start(container: Container): void {
+    dotenv.config();
     const server: InversifyExpressServer = new InversifyExpressServer(
       container
     );
@@ -24,11 +27,13 @@ export class Server {
     });
 
     const app = server.build();
-    const routeInfo = getRouteInfo(container);
 
-    app.listen(3000, () => {
-      console.log(JSON.stringify({ routes: routeInfo }, null, 2));
-      console.log('Server started on port 3000');
+    app.listen(Number(process.env.SERVER_PORT), () => {
+      if (JSON.parse(process.env.LOGGER_ENABLED)) {
+        const routeInfo = getRouteInfo(container);
+        console.log(JSON.stringify({ routes: routeInfo }, null, 2));
+        console.log(`Server started on port ${process.env.SERVER_PORT}`);
+      }
     });
   }
 }

@@ -1,4 +1,11 @@
 /**
+ * Kernel
+ */
+
+import '../Infrastructure/Mailer/NodeMailer';
+import '../Infrastructure/Data/MySqlConfigProvider';
+
+/**
  * Controllers
  */
 

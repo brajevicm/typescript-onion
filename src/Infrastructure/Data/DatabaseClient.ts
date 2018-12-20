@@ -1,4 +1,5 @@
 import { Connection, ConnectionOptions, createConnection } from 'typeorm';
+
 import { ConfigProvider } from '../../Core/Kernel/ConfigProvider';
 
 export class DatabaseClient {
@@ -28,7 +29,10 @@ export class DatabaseClient {
       synchronize: true
     });
 
-    DatabaseClient.connectionPool.set(name, connection);
+    if (connection) {
+      DatabaseClient.connectionPool.set(name, connection);
+      console.log(`Connected to database ${configProvider.database}`);
+    }
 
     return connection;
   }
