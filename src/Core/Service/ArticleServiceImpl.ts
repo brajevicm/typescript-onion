@@ -6,15 +6,25 @@ import { ArticleRepository } from '../Interface/ArticleRepository';
 import { ServiceTypes } from '../../Config/Types/ServiceTypes';
 import { RepositoryTypes } from '../../Config/Types/RepositoryTypes';
 import { Article } from '../Interface/Article';
+import { KernelTypes } from '../../Config/Types/KernelTypes';
+import { CacheClient } from '../Kernel/CacheClient';
 
 @provide(ServiceTypes.ArticleService)
 export class ArticleServiceImpl implements ArticleService {
   constructor(
     @inject(RepositoryTypes.ArticleRepository)
-    private articleRepository: ArticleRepository
+    private readonly articleRepository: ArticleRepository,
+    @inject(KernelTypes.CacheClient)
+    private readonly cacheClient: CacheClient
   ) {}
 
   public async getArticle(id: string): Promise<Article> {
+    const cachedArticle = await this.cacheClient.get(id);
+
+    if (cachedArticle) {
+      return cachedArticle;
+    }
+
     return await this.articleRepository.findById(id);
   }
 
@@ -23,6 +33,9 @@ export class ArticleServiceImpl implements ArticleService {
   }
 
   public async save(article: Article): Promise<Article> {
-    return await this.articleRepository.save(article);
+    const savedArticle = await this.articleRepository.save(article);
+    this.cacheClient.set(String(savedArticle.id), savedArticle);
+
+    return savedArticle;
   }
 }

@@ -1,5 +1,5 @@
-export interface CacheClient<T> {
-  set(key: string, value: T): Promise<void>;
-  get(key: string): Promise<T>;
-  getAll(...keys: string[]): Promise<T[]>;
+export interface CacheClient {
+  set(key: string, value: any): Promise<void>;
+  get(key: string): Promise<any>;
+  getAll(key: string): Promise<any[]>;
 }

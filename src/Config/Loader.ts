@@ -5,7 +5,7 @@
 import '../Infrastructure/Mailer/NodeMailer';
 import '../Infrastructure/Data/MySqlConfigProvider';
 import '../Infrastructure/Data/TypeOrmDatabaseClient';
-import '../Infrastructure/Data/Cache/RedisClient';
+import '../Infrastructure/Data/Cache/CacheClientImpl';
 import '../Util/ConsoleLogger';
 
 /**
