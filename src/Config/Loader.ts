@@ -1,4 +1,11 @@
 /**
+ * Web
+ */
+
+import '../Web/Security/AuthProvider';
+import '../Web/Security/Principal';
+
+/**
  * Kernel
  */
 
@@ -28,6 +35,7 @@ import '../Core/Entity/ArticleEntity';
 
 import '../Core/Service/UserServiceImpl';
 import '../Core/Service/ArticleServiceImpl';
+import '../Core/Service/AuthServiceImpl';
 
 /**
  * Repositories

@@ -21,15 +21,9 @@ import { NotFoundException } from '../Exception/NotFoundException';
 @controller('/users')
 export class UserController extends BaseHttpController {
   constructor(
-    @inject(ServiceTypes.UserService)
-    private readonly userService: UserService
+    @inject(ServiceTypes.UserService) private readonly userService: UserService
   ) {
     super();
-  }
-
-  @httpGet('/custom')
-  public getCustom(): User[] {
-    return this.userService.custom();
   }
 
   @httpGet('/')

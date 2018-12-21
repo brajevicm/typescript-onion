@@ -22,19 +22,51 @@ export class RepositoryImpl<TEntity, TDto> implements Repository<TEntity> {
       .catch(e => console.log(e.message));
   }
 
+  public async save(entity: any): Promise<TEntity> {
+    return await this.repository.save(entity);
+  }
+
+  // @TODO
+  public async delete(entity: TEntity): Promise<TEntity> {
+    return undefined;
+  }
+
+  // @TODO
+  public async deleteById(id: number): Promise<TEntity> {
+    return undefined;
+  }
+
+  // @TODO
+  public async update(entity: TEntity): Promise<TEntity> {
+    return undefined;
+  }
+
+  // @TODO
   public async findAll(): Promise<TEntity[]> {
     return await this.repository.find();
   }
 
-  public async findById(id: string): Promise<TEntity> {
+  // @TODO
+  public async findOneById(id: number): Promise<TEntity> {
     return await this.repository.findOne(id);
   }
 
+  // @TODO
   public async findManyById(ids: string[]): Promise<TEntity[]> {
     return undefined;
   }
 
-  public async save(entity: any): Promise<TEntity> {
-    return await this.repository.save(entity);
+  // @TODO
+  public async findOne(options: Object): Promise<TEntity> {
+    // return await this.repository.find(options);
+    return undefined;
+  }
+
+  public async findMany(options: Object): Promise<TEntity[]> {
+    return undefined;
+  }
+
+  public async query(queryString: string): Promise<TEntity> {
+    return undefined;
   }
 }

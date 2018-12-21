@@ -1,14 +1,18 @@
-import 'reflect-metadata';
 import { Container } from 'inversify';
 import { getRouteInfo, InversifyExpressServer } from 'inversify-express-utils';
 import * as express from 'express';
 
 import { MiddlewareTypes } from '../Config/Types/MiddlewareTypes';
+import { AuthProvider } from './Security/AuthProvider';
 
 export class Server {
   public start(container: Container): void {
     const server: InversifyExpressServer = new InversifyExpressServer(
-      container
+      container,
+      null,
+      null,
+      null,
+      AuthProvider
     );
 
     server.setConfig((app: express.Application) => {
@@ -24,9 +28,7 @@ export class Server {
       app.use(container.get<express.RequestHandler>(MiddlewareTypes.Cors));
     });
 
-    const app = server.build();
-
-    app.listen(Number(process.env.SERVER_PORT), () => {
+    server.build().listen(Number(process.env.SERVER_PORT), () => {
       if (JSON.parse(process.env.LOGGER_ENABLED)) {
         const routeInfo = getRouteInfo(container);
 

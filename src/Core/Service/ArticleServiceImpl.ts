@@ -14,18 +14,17 @@ export class ArticleServiceImpl implements ArticleService {
   constructor(
     @inject(RepositoryTypes.ArticleRepository)
     private readonly articleRepository: ArticleRepository,
-    @inject(KernelTypes.CacheClient)
-    private readonly cacheClient: CacheClient
+    @inject(KernelTypes.CacheClient) private readonly cacheClient: CacheClient
   ) {}
 
-  public async getArticle(id: string): Promise<Article> {
-    const cachedArticle = await this.cacheClient.get(id);
+  public async getArticle(id: number): Promise<Article> {
+    const cachedArticle = await this.cacheClient.get(String(id));
 
     if (cachedArticle) {
       return cachedArticle;
     }
 
-    return await this.articleRepository.findById(id);
+    return await this.articleRepository.findOneById(id);
   }
 
   public async getArticles(): Promise<Article[]> {

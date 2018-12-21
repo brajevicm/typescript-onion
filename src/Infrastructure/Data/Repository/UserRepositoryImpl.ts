@@ -21,18 +21,16 @@ export class UserRepositoryImpl extends RepositoryImpl<UserEntity, UserDto>
     super(databaseClient, UserEntity.prototype);
   }
 
-  public custom(): User[] {
-    return [
-      {
-        id: 1,
-        email: 'loremaa@ipsum.com',
-        name: 'Lorem'
-      },
-      {
-        id: 2,
-        email: 'doloe@sit.com',
-        name: 'Dolor'
-      }
-    ];
+  //@TODO
+  public async findByToken(token: string): Promise<User> {
+    return undefined;
+  }
+
+  //@TODO
+  public async findByUsernameAndPassword(
+    username: string,
+    password: string
+  ): Promise<User> {
+    return undefined;
   }
 }

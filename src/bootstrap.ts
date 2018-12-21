@@ -1,7 +1,9 @@
+import 'reflect-metadata';
+
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-import { Server } from './Web/Server';
 import { container } from './Config/Inversify';
+import { Server } from './Web/Server';
 
 new Server().start(container);
