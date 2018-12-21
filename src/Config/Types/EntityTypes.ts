@@ -1,5 +1,6 @@
 const EntityTypes = {
-  User: Symbol.for('User')
+  User: Symbol.for('User'),
+  Article: Symbol.for('Article')
 };
 
 export default EntityTypes;

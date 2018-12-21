@@ -1,7 +1,7 @@
 import { Entity } from '../Kernel/Entity';
 
-export interface User extends Entity {
+export interface Article extends Entity {
   id?: number;
-  email: string;
-  name: string;
+  title: string;
+  body: string;
 }

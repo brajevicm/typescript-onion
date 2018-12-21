@@ -1,6 +1,4 @@
-import { User } from './User';
 import { Repository } from '../Kernel/Repository';
+import { Article } from './Article';
 
-export interface UserRepository extends Repository<User> {
-  custom(): User[];
-}
+export interface ArticleRepository extends Repository<Article> {}

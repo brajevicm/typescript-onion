@@ -1,11 +1,9 @@
-import { User } from './User';
+import { Article } from './Article';
 
-export interface UserService {
-  getUsers(): Promise<User[]>;
+export interface ArticleService {
+  getArticles(): Promise<Article[]>;
 
-  getUser(id: string): Promise<User>;
+  getArticle(id: string): Promise<Article>;
 
-  custom(): User[];
-
-  save(user: User): Promise<User>;
+  save(user: Article): Promise<Article>;
 }

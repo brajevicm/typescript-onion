@@ -1,6 +1,6 @@
-export class UserNotFoundException extends Error {
-    constructor(userId: number) {
-        super(`User ${userId} not found!`);
-        this.name = 'UserNotFoundException';
-    }
+export class NotFoundException extends Error {
+  constructor(id: number) {
+    super(`Resource ${id} not found!`);
+    this.name = 'NotFoundException';
+  }
 }

@@ -30,9 +30,19 @@ services:
     networks:
       - backend_network
 
+  redis:
+    image: redis:5.0.3-alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_data:/data
+    networks:
+      - backend_network
+
 volumes:
   notused:
   mysql_data:
+  redis_data:
 
 networks:
   backend_network:

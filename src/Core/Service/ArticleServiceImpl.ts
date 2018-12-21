@@ -1,32 +1,28 @@
+import { inject } from 'inversify';
 import { provide } from 'inversify-binding-decorators';
 
-import { UserService } from '../Interface/UserService';
-import { User } from '../Interface/User';
+import { ArticleService } from '../Interface/ArticleService';
+import { ArticleRepository } from '../Interface/ArticleRepository';
+import { ServiceTypes } from '../../Config/Types/ServiceTypes';
 import { RepositoryTypes } from '../../Config/Types/RepositoryTypes';
-import { inject } from 'inversify';
-import { UserRepository } from '../Interface/UserRepository';
-import ServiceTypes from '../../Config/Types/ServiceTypes';
+import { Article } from '../Interface/Article';
 
-@provide(ServiceTypes.UserService)
-export class UserServiceImpl implements UserService {
+@provide(ServiceTypes.ArticleService)
+export class ArticleServiceImpl implements ArticleService {
   constructor(
-    @inject(RepositoryTypes.UserRepository)
-    private userRepository: UserRepository
+    @inject(RepositoryTypes.ArticleRepository)
+    private articleRepository: ArticleRepository
   ) {}
 
-  public custom(): User[] {
-    return this.userRepository.custom();
+  public async getArticle(id: string): Promise<Article> {
+    return await this.articleRepository.findById(id);
   }
 
-  public async getUser(id: string): Promise<User> {
-    return await this.userRepository.findById(id);
+  public async getArticles(): Promise<Article[]> {
+    return await this.articleRepository.findAll();
   }
 
-  public async getUsers(): Promise<User[]> {
-    return await this.userRepository.findAll();
-  }
-
-  public async save(user: User): Promise<User> {
-    return await this.userRepository.save(user);
+  public async save(article: Article): Promise<Article> {
+    return await this.articleRepository.save(article);
   }
 }

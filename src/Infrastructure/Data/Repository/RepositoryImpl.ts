@@ -1,39 +1,40 @@
-// import {provide} from "inversify-binding-decorators";
-// import {getConnection, Repository as TypeORMRepository} from "typeorm";
-//
-// import RepositoryTypes from "../../../Web/Config/RepositoryTypes";
-// import {Query, Repository} from "../../../Core/Kernel/Repository";
-//
-// @provide(RepositoryTypes.Repository)
-// export class RepositoryImpl<TEntity, TDto> implements Repository<TEntity> {
-//     private repository: TypeORMRepository<TEntity>;
-//
-//     public constructor(
-//     ) {
-//         this.repository = getConnection().getRepository(TEntity);
-//     }
-//
-//     public async findAll(): Promise<TEntity[]> {
-//         const entities = await this.repository.find();
-//         return entities;
-//         // return entities.map(entity => this.dataMapper.toDto(entity))
-//     }
-//
-//     public async findById(id: string): Promise<TEntity> {
-//         const entity = await this.repository.findOne(id);
-//         return entity;
-//         // return this.dataMapper.toDto(entity);
-//     }
-//
-//     public async findManyById(ids: string[]): Promise<TEntity[]> {
-//         return undefined;
-//     }
-//
-//     public async findManyByQuery(query?: Query<TEntity>): Promise<TEntity[]> {
-//         return undefined;
-//     }
-//
-//     public async save(doc: TEntity): Promise<TEntity> {
-//         return undefined;
-//     }
-// }
+import { unmanaged } from 'inversify';
+import { provide } from 'inversify-binding-decorators';
+import { Repository as TypeORMRepository } from 'typeorm';
+
+import { Repository } from '../../../Core/Kernel/Repository';
+import { RepositoryTypes } from '../../../Config/Types/RepositoryTypes';
+import { DatabaseClient } from '../../../Core/Kernel/DatabaseClient';
+
+@provide(RepositoryTypes.Repository)
+export class RepositoryImpl<TEntity, TDto> implements Repository<TEntity> {
+  private repository: TypeORMRepository<TEntity>;
+
+  public constructor(
+    @unmanaged() databaseClient: DatabaseClient,
+    @unmanaged() entity: TEntity
+  ) {
+    databaseClient
+      .connect(entity.constructor)
+      .then(async connection => {
+        this.repository = connection.getRepository(entity.constructor);
+      })
+      .catch(e => console.log(e.message));
+  }
+
+  public async findAll(): Promise<TEntity[]> {
+    return await this.repository.find();
+  }
+
+  public async findById(id: string): Promise<TEntity> {
+    return await this.repository.findOne(id);
+  }
+
+  public async findManyById(ids: string[]): Promise<TEntity[]> {
+    return undefined;
+  }
+
+  public async save(entity: any): Promise<TEntity> {
+    return await this.repository.save(entity);
+  }
+}

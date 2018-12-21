@@ -1,7 +1,7 @@
 export type Query<T> = { [P in keyof T]?: T[P] | { $regex: RegExp } };
 
 export interface Repository<T> {
-  save(user: T): Promise<T>;
+  save(entity: T): Promise<T>;
 
   findAll(): Promise<T[]>;
 

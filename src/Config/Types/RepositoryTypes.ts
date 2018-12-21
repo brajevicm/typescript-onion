@@ -1,6 +1,5 @@
-const RepositoryTypes = {
+export const RepositoryTypes = {
   Repository: Symbol.for('Repository'),
-  UserRepository: Symbol.for('UserRepository')
+  UserRepository: Symbol.for('UserRepository'),
+  ArticleRepository: Symbol.for('ArticleRepository')
 };
-
-export default RepositoryTypes;

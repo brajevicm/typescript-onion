@@ -13,41 +13,36 @@ import {
   OkNegotiatedContentResult
 } from 'inversify-express-utils/dts/results';
 
-import { UserService } from '../../Core/Interface/UserService';
-import { User } from '../../Core/Interface/User';
-import { UserNotFoundException } from '../Exception/UserNotFoundException';
+import { ArticleService } from '../../Core/Interface/ArticleService';
+import { Article } from '../../Core/Interface/Article';
 import { ServiceTypes } from '../../Config/Types/ServiceTypes';
+import { NotFoundException } from '../Exception/NotFoundException';
 
-@controller('/users')
-export class UserController extends BaseHttpController {
+@controller('/articles')
+export class ArticleController extends BaseHttpController {
   constructor(
-    @inject(ServiceTypes.UserService)
-    private readonly userService: UserService
+    @inject(ServiceTypes.ArticleService)
+    private readonly articleService: ArticleService
   ) {
     super();
   }
 
-  @httpGet('/custom')
-  public getCustom(): User[] {
-    return this.userService.custom();
-  }
-
   @httpGet('/')
-  public async getUsers(): Promise<User[]> {
-    return await this.userService.getUsers();
+  public async getArticles(): Promise<Article[]> {
+    return await this.articleService.getArticles();
   }
 
   @httpGet('/:id')
-  public async getUser(
+  public async getArticle(
     request: Request
-  ): Promise<NotFoundResult | OkNegotiatedContentResult<User>> {
+  ): Promise<NotFoundResult | OkNegotiatedContentResult<Article>> {
     try {
-      const user = await this.userService.getUser(request.params.id);
-      if (!user) {
-        throw new UserNotFoundException(request.params.id);
+      const article = await this.articleService.getArticle(request.params.id);
+      if (!article) {
+        throw new NotFoundException(request.params.id);
       }
 
-      return this.ok(user);
+      return this.ok(article);
     } catch (e) {
       console.log(e.message);
       return this.notFound();
@@ -55,17 +50,17 @@ export class UserController extends BaseHttpController {
   }
 
   @httpPost('/')
-  public async newUser(
+  public async newArticle(
     request: Request
   ): Promise<
-    CreatedNegotiatedContentResult<User> | BadRequestErrorMessageResult
+    CreatedNegotiatedContentResult<Article> | BadRequestErrorMessageResult
   > {
     try {
-      const user = await this.userService.save(request.body);
-      if (!user) {
+      const article = await this.articleService.save(request.body);
+      if (!article) {
         throw Error('not created');
       }
-      return this.created(request.path, user);
+      return this.created(request.path, article);
     } catch (e) {
       return this.badRequest(e.message);
     }

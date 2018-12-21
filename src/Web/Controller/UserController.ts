@@ -15,8 +15,8 @@ import {
 
 import { UserService } from '../../Core/Interface/UserService';
 import { User } from '../../Core/Interface/User';
-import { UserNotFoundException } from '../Exception/UserNotFoundException';
-import ServiceTypes from '../../Config/Types/ServiceTypes';
+import { ServiceTypes } from '../../Config/Types/ServiceTypes';
+import { NotFoundException } from '../Exception/NotFoundException';
 
 @controller('/users')
 export class UserController extends BaseHttpController {
@@ -44,7 +44,7 @@ export class UserController extends BaseHttpController {
     try {
       const user = await this.userService.getUser(request.params.id);
       if (!user) {
-        throw new UserNotFoundException(request.params.id);
+        throw new NotFoundException(request.params.id);
       }
 
       return this.ok(user);

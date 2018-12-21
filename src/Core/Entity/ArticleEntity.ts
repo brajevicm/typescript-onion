@@ -1,18 +1,18 @@
 import { provide } from 'inversify-binding-decorators';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-import { User } from '../Interface/User';
 import EntityTypes from '../../Config/Types/EntityTypes';
+import { Article } from '../Interface/Article';
 
-@Entity('user')
-@provide(EntityTypes.User)
-export class UserEntity implements User {
+@Entity('article')
+@provide(EntityTypes.Article)
+export class ArticleEntity implements Article {
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
   @Column()
-  email: string;
+  title: string;
 
   @Column()
-  name: string;
+  body: string;
 }

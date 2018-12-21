@@ -7,7 +7,7 @@ import { KernelTypes } from '../../Config/Types/KernelTypes';
 export class InfoLogger implements Logger {
   private readonly isEnabled: boolean = JSON.parse(process.env.LOGGER_ENABLED);
 
-  public logInfo(...message: Array<any>): void {
+  public logInfo(...message: any[]): void {
     if (this.isEnabled) {
       console.log(...message);
     }
@@ -15,7 +15,7 @@ export class InfoLogger implements Logger {
 
   public logError(message: string): void {
     if (this.isEnabled) {
-      new Error(message);
+      throw Error(message);
     }
   }
 }

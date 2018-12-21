@@ -38,7 +38,7 @@ export class TypeOrmDatabaseClient implements DatabaseClient {
 
       TypeOrmDatabaseClient.connectionPool.set(name, connection);
       this.logger.logInfo(
-        `Connected to database ${this.configProvider.database}`
+        `Connected to database ${this.configProvider.database} with ${name}`
       );
 
       return connection;

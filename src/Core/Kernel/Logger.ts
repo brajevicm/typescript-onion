@@ -1,5 +1,5 @@
 export interface Logger {
-  logInfo(...message: Array<any>): void;
+  logInfo(...message: any[]): void;
 
   logError(message: string): void;
 }

@@ -16,15 +16,13 @@ export class NodeMailer implements Mailer {
   public async send(to: string, subject: string, text: string): Promise<void> {
     if (this.isEnabled) {
       const from = '"Support" <support@email.com>';
-      const to = 'to@email.com';
-
       const transport: Mail = this.setup();
 
       const email = {
         from,
         to,
-        subject: 'Mail subject',
-        text: 'Mail body.'
+        subject,
+        text
       };
 
       try {

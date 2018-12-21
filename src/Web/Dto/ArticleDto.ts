@@ -1,6 +1,7 @@
-import { User } from '../../Core/Interface/User';
+import { Article } from '../../Core/Interface/Article';
 
-export class UserDto implements User {
-  email: string;
-  name: string;
+export class ArticleDto implements Article {
+  id?: number;
+  body: string;
+  title: string;
 }

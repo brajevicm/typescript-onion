@@ -1,5 +1,4 @@
-const ServiceTypes = {
-  UserService: Symbol.for('UserService')
+export const ServiceTypes = {
+  UserService: Symbol.for('UserService'),
+  ArticleService: Symbol.for('ArticleService')
 };
-
-export default ServiceTypes;

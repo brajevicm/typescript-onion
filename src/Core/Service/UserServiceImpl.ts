@@ -2,10 +2,10 @@ import { provide } from 'inversify-binding-decorators';
 
 import { UserService } from '../Interface/UserService';
 import { User } from '../Interface/User';
-import RepositoryTypes from '../../Config/Types/RepositoryTypes';
+import { RepositoryTypes } from '../../Config/Types/RepositoryTypes';
 import { inject } from 'inversify';
 import { UserRepository } from '../Interface/UserRepository';
-import ServiceTypes from '../../Config/Types/ServiceTypes';
+import { ServiceTypes } from '../../Config/Types/ServiceTypes';
 
 @provide(ServiceTypes.UserService)
 export class UserServiceImpl implements UserService {
