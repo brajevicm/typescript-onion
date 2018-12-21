@@ -12,8 +12,9 @@ export class TypeOrmDatabaseClient implements DatabaseClient {
   private static connectionPool: Map<string, Connection> = new Map();
 
   public constructor(
-    @inject(KernelTypes.Logger) private logger: Logger,
-    @inject(KernelTypes.ConfigProvider) private configProvider: ConfigProvider
+    @inject(KernelTypes.Logger) private readonly logger: Logger,
+    @inject(KernelTypes.ConfigProvider)
+    private readonly configProvider: ConfigProvider
   ) {}
 
   public async connect(entity: any): Promise<any> {
