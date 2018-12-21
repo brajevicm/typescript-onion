@@ -1,7 +1,7 @@
 import { provide } from 'inversify-binding-decorators';
 
-import { Logger } from '../Kernel/Logger';
-import { KernelTypes } from '../../Config/Types/KernelTypes';
+import { Logger } from '../Core/Kernel/Logger';
+import { KernelTypes } from '../Config/Types/KernelTypes';
 
 @provide(KernelTypes.Logger)
 export class ConsoleLogger implements Logger {
