@@ -2,8 +2,6 @@
 
 ## TODO
 
-Redis
-
 GraphQL
 
 Scheduler
