@@ -3,9 +3,9 @@ export interface Repository<T> {
 
   update(entity: T): Promise<T>;
 
-  delete(entity: T): Promise<T>;
+  delete(entity: T): Promise<any>;
 
-  deleteById(id: number): Promise<T>;
+  deleteById(id: number): Promise<any>;
 
   findOneById(id: number): Promise<T>;
 

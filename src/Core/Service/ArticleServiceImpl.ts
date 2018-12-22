@@ -37,4 +37,20 @@ export class ArticleServiceImpl implements ArticleService {
 
     return savedArticle;
   }
+
+  public async delete(article: Article): Promise<Article> {
+    return await this.articleRepository.delete(article);
+  }
+
+  public async deleteById(id: number): Promise<Article> {
+    return await this.articleRepository.deleteById(id);
+  }
+
+  public async getArticlesByTitle(title: string): Promise<Article[]> {
+    return await this.articleRepository.findMany({ title });
+  }
+
+  public async update(article: Article): Promise<Article> {
+    return await this.articleRepository.update(article);
+  }
 }

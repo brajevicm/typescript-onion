@@ -1,8 +1,10 @@
 import {
   BaseHttpController,
   controller,
+  httpDelete,
   httpGet,
-  httpPost
+  httpPost,
+  httpPut
 } from 'inversify-express-utils';
 import { inject } from 'inversify';
 import { Request } from 'express';
@@ -63,6 +65,37 @@ export class ArticleController extends BaseHttpController {
       return this.created(request.path, article);
     } catch (e) {
       return this.badRequest(e.message);
+    }
+  }
+
+  @httpDelete('/:id')
+  public async deleteArticle(request: Request): Promise<any> {
+    try {
+      const article = await this.articleService.getArticle(request.params.id);
+      const deleted = await this.articleService.delete(article);
+
+      if (!deleted) {
+        throw new NotFoundException(request.params.id);
+      }
+
+      return this.ok();
+    } catch (e) {
+      return this.notFound();
+    }
+  }
+
+  @httpPut('/:id')
+  public async updateArticle(request: Request): Promise<any> {
+    try {
+      const article = await this.articleService.getArticle(request.params.id);
+      const updatedArticle = Object.assign(article, request.body);
+      console.log(updatedArticle);
+      const updated = await this.articleService.update(updatedArticle);
+
+      return this.ok(updated);
+    } catch (e) {
+      console.log(e);
+      return this.notFound();
     }
   }
 }
