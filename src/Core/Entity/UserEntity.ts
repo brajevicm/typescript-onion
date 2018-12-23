@@ -1,8 +1,9 @@
 import { provide } from 'inversify-binding-decorators';
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { User } from '../Interface/User';
-import EntityTypes from '../../Config/Types/EntityTypes';
+import { EntityTypes } from '../../Config/Types/EntityTypes';
+import { ArticleEntity } from './ArticleEntity';
 
 @Entity('user')
 @provide(EntityTypes.User)
@@ -14,5 +15,17 @@ export class UserEntity implements User {
   email: string;
 
   @Column()
-  name: string;
+  username: string;
+
+  @Column()
+  password: string;
+
+  @Column()
+  firstName: string;
+
+  @Column()
+  lastName: string;
+
+  @OneToMany(type => ArticleEntity, article => article.user)
+  articles: Promise<ArticleEntity[]>;
 }

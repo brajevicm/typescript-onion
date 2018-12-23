@@ -1,3 +1,7 @@
+import { Connection } from 'typeorm';
+
 export interface DatabaseClient {
-  connect(entity: any): Promise<any>;
+  connect(): Promise<void>;
+
+  getConnection(): Connection | any;
 }

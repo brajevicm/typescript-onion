@@ -1,25 +1,23 @@
 import { unmanaged } from 'inversify';
-import { provide } from 'inversify-binding-decorators';
+import { fluentProvide } from 'inversify-binding-decorators';
 import { Repository as TypeORMRepository } from 'typeorm';
 
 import { Repository } from '../../../Core/Kernel/Repository';
 import { RepositoryTypes } from '../../../Config/Types/RepositoryTypes';
 import { DatabaseClient } from '../../../Core/Kernel/DatabaseClient';
 
-@provide(RepositoryTypes.Repository)
+@fluentProvide(RepositoryTypes.Repository)
+  .inSingletonScope()
+  .done(true)
 export class RepositoryImpl<TEntity, TDto> implements Repository<TEntity> {
   private repository: TypeORMRepository<TEntity>;
 
   public constructor(
     @unmanaged() databaseClient: DatabaseClient,
-    @unmanaged() entity: TEntity
+    @unmanaged()
+    entity: { new (): TEntity }
   ) {
-    databaseClient
-      .connect(entity.constructor)
-      .then(async connection => {
-        this.repository = connection.getRepository(entity.constructor);
-      })
-      .catch(e => console.log(e.message));
+    this.repository = databaseClient.getConnection().getRepository(entity);
   }
 
   public async save(entity: any): Promise<TEntity> {
@@ -58,7 +56,6 @@ export class RepositoryImpl<TEntity, TDto> implements Repository<TEntity> {
     return await this.repository.find(options);
   }
 
-  // @TODO
   public async query(queryString: string): Promise<TEntity> {
     return await this.repository.query(queryString);
   }

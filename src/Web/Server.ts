@@ -4,9 +4,11 @@ import * as express from 'express';
 
 import { MiddlewareTypes } from '../Config/Types/MiddlewareTypes';
 import { AuthProvider } from './Security/AuthProvider';
+import { KernelTypes } from '../Config/Types/KernelTypes';
+import { DatabaseClient } from '../Core/Kernel/DatabaseClient';
 
 export class Server {
-  public start(container: Container): void {
+  public async start(container: Container): Promise<void> {
     const server: InversifyExpressServer = new InversifyExpressServer(
       container,
       null,
@@ -14,6 +16,8 @@ export class Server {
       null,
       AuthProvider
     );
+
+    await container.get<DatabaseClient>(KernelTypes.DatabaseClient).connect();
 
     server.setConfig((app: express.Application) => {
       app.use(

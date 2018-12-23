@@ -15,6 +15,9 @@ export class AuthServiceImpl implements AuthService {
   ) {}
 
   // @TODO
+  public generateToken(user): any {}
+
+  // @TODO
   public async findUserByToken(token: string): Promise<User> {
     const id = 1;
     return await this.userRepository.findOneById(id);
