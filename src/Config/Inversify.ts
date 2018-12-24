@@ -26,16 +26,16 @@ container
   .toConstantValue(cors());
 
 container
-  .bind<express.RequestHandler>(MiddlewareTypes.JsonParser)
-  .toConstantValue(bodyParser.json());
-
-container
   .bind<express.RequestHandler>(MiddlewareTypes.UrlEncodedParser)
   .toConstantValue(bodyParser.urlencoded({ extended: true }));
 
 container
+  .bind<express.RequestHandler>(MiddlewareTypes.JsonParser)
+  .toConstantValue(bodyParser.json());
+
+container
   .bind<express.RequestHandler>(MiddlewareTypes.Morgan)
-  .toConstantValue(morgan('combined'));
+  .toConstantValue(morgan('dev'));
 
 container
   .bind<express.RequestHandler>(MiddlewareTypes.Helmet)

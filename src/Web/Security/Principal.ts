@@ -9,7 +9,7 @@ export class Principal implements interfaces.Principal {
 
   // @TODO
   public async isAuthenticated(): Promise<boolean> {
-    return await true;
+    return await !!this.details;
   }
 
   // @TODO

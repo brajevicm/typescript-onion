@@ -1,12 +1,11 @@
 import { User } from './User';
 
 export interface AuthService {
-  generateToken(user): any;
+  login(email: string, password: string): Promise<object>;
 
-  findUserByToken(token: string | string[]): Promise<User>;
+  register(user: User): Promise<User>;
 
-  findUserByUsernameAndPassword(
-    username: string,
-    password: string
-  ): Promise<User>;
+  generateToken(user: User): string;
+
+  findUserByToken(token: string): Promise<User>;
 }

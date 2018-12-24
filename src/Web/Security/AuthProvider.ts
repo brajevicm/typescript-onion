@@ -17,7 +17,7 @@ export class AuthProvider implements interfaces.AuthProvider {
     res: express.Response,
     next: express.NextFunction
   ): Promise<interfaces.Principal> {
-    const token = req.headers['x-auth-token'];
+    const token = req.headers.authorization;
     const user = await this.authService.findUserByToken(token);
 
     return new Principal(user);

@@ -21,6 +21,7 @@ import '../Util/ConsoleLogger';
 
 import '../Web/Controller/UserController';
 import '../Web/Controller/ArticleController';
+import '../Web/Controller/AuthController';
 
 /**
  * Entities

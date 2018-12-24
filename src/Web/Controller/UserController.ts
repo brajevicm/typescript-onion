@@ -57,7 +57,7 @@ export class UserController extends BaseHttpController {
     try {
       const user = await this.userService.save(request.body);
       if (!user) {
-        throw Error('not created');
+        throw Error('Not created');
       }
       return this.created(request.path, user);
     } catch (e) {

@@ -21,10 +21,14 @@ export class UserRepositoryImpl extends RepositoryImpl<UserEntity, UserDto>
     super(databaseClient, UserEntity);
   }
 
-  public async findByUsernameAndPassword(
-    username: string,
+  public async findByEmail(email: string): Promise<User> {
+    return this.findOne({ email });
+  }
+
+  public async findByEmailAndPassword(
+    email: string,
     password: string
   ): Promise<User> {
-    return this.findOne({ username, password });
+    return this.findOne({ email, password });
   }
 }

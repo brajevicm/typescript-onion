@@ -9,8 +9,9 @@ import {
 import { inject } from 'inversify';
 import { Request } from 'express';
 import {
-  BadRequestErrorMessageResult,
+  BadRequestResult,
   CreatedNegotiatedContentResult,
+  JsonResult,
   NotFoundResult,
   OkNegotiatedContentResult
 } from 'inversify-express-utils/dts/results';
@@ -55,17 +56,23 @@ export class ArticleController extends BaseHttpController {
   public async newArticle(
     request: Request
   ): Promise<
-    CreatedNegotiatedContentResult<Article> | BadRequestErrorMessageResult
+    CreatedNegotiatedContentResult<Article> | BadRequestResult | JsonResult
   > {
-    try {
-      const article = await this.articleService.save(request.body);
-      if (!article) {
-        throw Error('not created');
-      }
-      return this.created(request.path, article);
-    } catch (e) {
-      return this.badRequest(e.message);
+    if (!(await this.httpContext.user.isAuthenticated())) {
+      return this.json('', 401);
     }
+
+    const articleDto = Object.assign(request.body, {
+      user: this.httpContext.user.details
+    });
+
+    const article = await this.articleService.save(articleDto);
+
+    if (!article) {
+      return this.badRequest();
+    }
+
+    return this.created(request.path, article);
   }
 
   @httpDelete('/:id')

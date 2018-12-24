@@ -1,5 +1,7 @@
 FROM node:10.14.2-alpine
 
+RUN apk add --no-cache make gcc g++ python
+
 RUN mkdir -p /opt/app
 
 ARG NODE_ENV=production

@@ -25,4 +25,8 @@ export class UserServiceImpl implements UserService {
   public async save(user: User): Promise<User> {
     return await this.userRepository.save(user);
   }
+
+  public async findByEmail(email: string): Promise<User> {
+    return await this.userRepository.findByEmail(email);
+  }
 }
