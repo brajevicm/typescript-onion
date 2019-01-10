@@ -66,6 +66,8 @@ export class ArticleController extends BaseHttpController {
       user: this.httpContext.user.details
     });
 
+    console.log(articleDto);
+
     const article = await this.articleService.save(articleDto);
 
     if (!article) {

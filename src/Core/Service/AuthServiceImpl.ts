@@ -27,7 +27,7 @@ export class AuthServiceImpl implements AuthService {
   }
 
   public async findUserByToken(token: string): Promise<User> {
-    if (!token) {
+    if (!token && typeof token !== 'string') {
       return undefined;
     }
 
@@ -40,6 +40,7 @@ export class AuthServiceImpl implements AuthService {
 
       return await this.userRepository.findOneById(authToken.id);
     } catch (e) {
+      console.log(e);
       return await undefined;
     }
   }
